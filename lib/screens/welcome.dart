@@ -42,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
           const Spacer(),
           RoundedButton(text: 'SIGN IN',press: () => _navigateToSignIn(context)),
-          AlreadyHaveAnAccountCheck(press: () => _navigateToLogin(context),login: false,),
+          AlreadyHaveAnAccountCheck(press: () => _navigateToLogin(context),),
           const Spacer()
         ],
       )
