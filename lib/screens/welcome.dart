@@ -1,10 +1,12 @@
 import 'package:ecommerce/components/already_have_account.dart';
+import 'package:ecommerce/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../components/rounded_button.dart';
 import '../constants/strings.dart';
 import '../constants/theme.dart';
+import 'login.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -39,13 +41,34 @@ class WelcomeScreen extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          RoundedButton(text: 'SIGN IN',press: ()=>{} ,),
-          AlreadyHaveAnAccountCheck(press: () => {},login: false,),
+          RoundedButton(text: 'SIGN IN',press: () => _navigateToSignIn(context)),
+          AlreadyHaveAnAccountCheck(press: () => _navigateToLogin(context),login: false,),
           const Spacer()
         ],
-
       )
+    );
     
+  }
+  _navigateToSignIn(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return const SignInScreen();
+        },
+      ),
     );
   }
+  _navigateToLogin(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return const LoginScreen();
+        },
+      ),
+    );
+  }
+
+  
 }
