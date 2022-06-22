@@ -34,10 +34,8 @@ class LoginScreen extends StatelessWidget {
                 ),
                 _userForm(),
                 _passwordForm(),
-                const Spacer(),
                 RoundedButton(text: 'Login', press: () => {}),
                 AlreadyHaveAnAccountCheck(press: () => {}),
-                const Spacer()
               ]),
         ));
   }

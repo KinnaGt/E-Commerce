@@ -36,10 +36,8 @@ class SignInScreen extends StatelessWidget {
               _userForm(),
               _emailForm(),
               _passwordForm(),
-              const Spacer(),
               RoundedButton(text: 'SIGN IN', press: () => {}),
               AlreadyHaveAnAccountCheck(press: () => _navigateToLogin(context)),
-              const Spacer()
             ]),
       ),
     );
