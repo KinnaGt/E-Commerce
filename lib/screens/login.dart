@@ -13,8 +13,18 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+final GlobalKey<FormState> _formLoginKey = GlobalKey<FormState>();
+var invisiblePass = true;
+
 class _LoginScreenState extends State<LoginScreen> {
-  var invisiblePass = true;
+  void validation(){
+    final FormState? _form = _formLoginKey.currentState;
+    if(_form!.validate()){
+      print('VALIDO');
+    }else{
+      print('Invalido');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -33,25 +43,31 @@ class _LoginScreenState extends State<LoginScreen> {
               },
             ),
           ),
-          body: Center(
-            child: ListView(
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(15.0),
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: height / 2 - 50,
-                    child: SvgPicture.asset(
-                      'assets/images/mansplaining.svg',
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                  _userForm(),
-                  _passwordForm(),
-                  RoundedButton(text: 'Login', press: () => {}),
-                  AlreadyHaveAnAccountCheck(
-                      press: () => {_navigateToSignIn(context)}, login: false),
-                ]),
+          body: SafeArea(
+            child: Form(
+              key: _formLoginKey,
+              child: Center(
+                child: ListView(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(15.0),
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        height: height / 2 - 50,
+                        child: SvgPicture.asset(
+                          'assets/images/mansplaining.svg',
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                      _userForm(),
+                      _passwordForm(),
+                      RoundedButton(text: 'Login', press: () => {validation()}),
+                      AlreadyHaveAnAccountCheck(
+                          press: () => {_navigateToSignIn(context)},
+                          login: false),
+                    ]),
+              ),
+            ),
           )),
     );
   }
@@ -60,6 +76,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         child: TextFormField(
+          validator: (value) {
+            if (value == "") {
+              return "Complete el campo";
+            } else if (value!.length < 4) {
+              return "User demasiado corto";
+            }
+            return null;
+          },
           autofocus: false,
           decoration: InputDecoration(
             icon: const Icon(
@@ -85,6 +109,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: TextFormField(
+        validator: (value) {
+          if (value == "") {
+            return 'Complete el campo';
+          } else if (value!.length < 8) {
+            return 'Contraseña demasiado corta';
+          }
+          return null;
+        },
         decoration: InputDecoration(
           hintText: "Password",
           icon: const Icon(
@@ -92,7 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Color(accent),
           ),
           suffixIcon: GestureDetector(
-              child: const Icon(Icons.visibility, color: Color(accent)),
+              child: Icon(
+                  invisiblePass ? Icons.visibility : Icons.visibility_off,
+                  color: const Color(accent)),
               onTap: () {
                 setState(() {
                   invisiblePass = !invisiblePass;
@@ -110,24 +144,15 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         obscureText: invisiblePass,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Enter your password';
-          }
-          return null;
-        },
       ),
     );
   }
 
   _navigateToSignIn(context) {
     FocusManager.instance.primaryFocus?.unfocus();
-    Navigator.push(
-      context,
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) {
-          return const SignInScreen();
-        },
+        builder: (context) => const SignInScreen()
       ),
     );
   }
