@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "185101561549",
+    "project_id": "e-magda",
+    "storage_bucket": "e-magda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185101561549:android:d2224da33f84b4987c8384",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185101561549-175h306pkkdhaj15pqcblc03mv1c0517.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvgoLIDA7V4zvYrl11RiruQ-ygoqKVD6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185101561549-175h306pkkdhaj15pqcblc03mv1c0517.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
