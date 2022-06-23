@@ -16,39 +16,43 @@ class WelcomeScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        
-        title: const Text('WELCOME'),
+        title: const Text('Welcome'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => {Navigator.pop(context)},
         ),
       ),
-      body: Column(
-        children: [
-         SizedBox(
-            width: double.infinity,
-            height: height / 2 - 50,
-            child: SvgPicture.asset(
-              'assets/images/welcome.svg',
-              fit: BoxFit.scaleDown,
-            )),
-          Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-            child: Text(
-              loginScreenStr,
-              style: textT1,
-              textAlign: TextAlign.center,
+      body: Center(
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(15.0),
+          children: [
+            SizedBox(
+                width: double.infinity,
+                height: height / 2 - 50,
+                child: SvgPicture.asset(
+                  'assets/images/welcome.svg',
+                  fit: BoxFit.scaleDown,
+                )),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              child: Text(
+                loginScreenStr,
+                style: textT1,
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          const Spacer(),
-          RoundedButton(text: 'SIGN IN',press: () => _navigateToSignIn(context)),
-          AlreadyHaveAnAccountCheck(press: () => _navigateToLogin(context),),
-          const Spacer()
-        ],
-      )
+            RoundedButton(
+                text: 'SIGN IN', press: () => _navigateToSignIn(context)),
+            AlreadyHaveAnAccountCheck(
+              press: () => _navigateToLogin(context),
+            ),
+          ],
+        ),
+      ),
     );
-    
   }
+
   _navigateToSignIn(context) {
     Navigator.push(
       context,
@@ -59,6 +63,7 @@ class WelcomeScreen extends StatelessWidget {
       ),
     );
   }
+
   _navigateToLogin(context) {
     Navigator.push(
       context,
@@ -69,6 +74,4 @@ class WelcomeScreen extends StatelessWidget {
       ),
     );
   }
-
-  
 }
