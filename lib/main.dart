@@ -1,5 +1,5 @@
-import 'package:ecommerce/constants/theme.dart';
-import 'package:ecommerce/screens/home_page.dart';
+import 'package:ecommerce/utils/theme.dart';
+import 'package:ecommerce/views/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp(                              
       debugShowCheckedModeBanner: false,
       title: 'Ecommerce',
       theme: ThemeData(
