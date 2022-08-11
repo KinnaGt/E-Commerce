@@ -1,12 +1,12 @@
 import 'package:ecommerce/components/already_have_account.dart';
-import 'package:ecommerce/views/sign_in.dart';
+import 'package:ecommerce/views/session/sign_in/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../components/rounded_button.dart';
-import '../utils/strings.dart';
-import '../utils/theme.dart';
-import 'login.dart';
+import '../../components/rounded_button.dart';
+import '../../utils/strings.dart';
+import '../../utils/theme.dart';
+import 'login/login.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

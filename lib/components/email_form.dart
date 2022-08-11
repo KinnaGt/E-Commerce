@@ -40,4 +40,3 @@ class EmailForm extends StatelessWidget {
         ));
   }
 }
-

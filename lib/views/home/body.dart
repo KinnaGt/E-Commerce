@@ -1,37 +1,17 @@
- import 'package:ecommerce/views/welcome.dart';
+import 'package:ecommerce/views/session/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../utils/strings.dart';
-import '../utils/theme.dart';
+import '../../utils/strings.dart';
+import '../../utils/theme.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class HomeBody extends StatelessWidget {
+  const HomeBody({Key? key}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => {},
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Skip',
-                style: TextStyle(fontSize: 18, color: Colors.black)),
-            onPressed: _navigateToMain,
-          ),
-        ],
-        elevation: 0,
-      ),
-      body: Column(children: [
+    return Column(children: [
         Text(
           presentationTitleStr,
           style: textH1,
@@ -61,12 +41,10 @@ class _HomePageState extends State<HomePage> {
             ),
             child: IconButton(
                 icon: const Icon(Icons.arrow_forward, color: Color(background)),
-                onPressed: _navigateToMain)),
-      ]),
-    );
+                onPressed: () =>_navigateToMain(context))),
+      ]);
   }
-  
-  _navigateToMain() {
+  _navigateToMain(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
