@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../utils/theme.dart';
 
 class PasswordForm extends StatefulWidget {
-  const PasswordForm({Key? key}) : super(key: key);
+  final void Function(String)? onChanged;
+  const PasswordForm({Key? key, this.onChanged}) : super(key: key);
 
   @override
   State<PasswordForm> createState() => _PasswordFormState();
@@ -16,6 +17,7 @@ class _PasswordFormState extends State<PasswordForm> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: TextFormField(
+        onChanged: widget.onChanged,
         validator: (value) {
           if (value == "") {
             return 'Complete el campo';

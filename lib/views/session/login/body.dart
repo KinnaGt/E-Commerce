@@ -1,10 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../components/already_have_account.dart';
+import '../../../components/email_form.dart';
 import '../../../components/password_form.dart';
 import '../../../components/rounded_button.dart';
-import '../../../components/user_form.dart';
 import '../sign_in/sign_in.dart';
 
 class LoginBody extends StatefulWidget {
@@ -16,16 +17,27 @@ class LoginBody extends StatefulWidget {
 
 final GlobalKey<FormState> _formLoginKey = GlobalKey<FormState>();
 var invisiblePass = true;
+String email = '', password = '';
 
 class _LoginBodyState extends State<LoginBody> {
-  void validation(){
+  Future<void> validation() async {
     final FormState? _form = _formLoginKey.currentState;
-    if(_form!.validate()){
-      print('VALIDO');
-    }else{
-      print('Invalido');
+    if (_form!.validate()) {
+      try {
+        UserCredential result = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Logueado Exitosamente'),
+        ));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(e.toString().split(']')[1]),
+        ));
+      }
+    } else {
+      print('INVALIDO');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -45,8 +57,20 @@ class _LoginBodyState extends State<LoginBody> {
                     fit: BoxFit.scaleDown,
                   ),
                 ),
-                const UserForm(),
-                const PasswordForm(),
+                EmailForm(
+                  onChanged: (String value) {
+                    setState(() {
+                      email = value;
+                    });
+                  },
+                ),
+                PasswordForm(
+                  onChanged: (String value) {
+                    setState(() {
+                      password = value;
+                    });
+                  },
+                ),
                 RoundedButton(text: 'Login', press: () => {validation()}),
                 AlreadyHaveAnAccountCheck(
                     press: () => {_navigateToSignIn(context)}, login: false),

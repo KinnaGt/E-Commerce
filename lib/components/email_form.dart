@@ -4,13 +4,15 @@ import '../utils/strings.dart';
 import '../utils/theme.dart';
 
 class EmailForm extends StatelessWidget {
-  const EmailForm({Key? key}) : super(key: key);
+  final void Function(String)? onChanged;
+  const EmailForm({Key? key, this.onChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         child: TextFormField(
+          onChanged: onChanged,
           validator: (value) {
             if (value == "") {
               return "Complete el campo";

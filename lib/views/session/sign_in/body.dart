@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -17,11 +18,21 @@ class SignBody extends StatefulWidget {
 
 final GlobalKey<FormState> _formRegisterKey = GlobalKey<FormState>();
 
+String email = '', password = '', username = '';
+
 class _SignBodyState extends State<SignBody> {
-  void validation() {
+  void validation() async {
     final FormState? _form = _formRegisterKey.currentState;
     if (_form!.validate()) {
-      print('VALIDADO');
+      try {
+        UserCredential result = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+        print(result.user!.uid);
+      }catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(e.toString().split(']')[1]),
+        ));
+      }
     } else {
       print('INVALIDO');
     }
@@ -32,31 +43,49 @@ class _SignBodyState extends State<SignBody> {
     double height = MediaQuery.of(context).size.height;
 
     return SafeArea(
-      child: Form(
-        key: _formRegisterKey,
-        child: Center(
-          child: ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(15.0),
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: height / 2 - 100,
-                  child: SvgPicture.asset(
-                    'assets/images/ideas.svg',
-                    fit: BoxFit.scaleDown,
+        child: Form(
+          key: _formRegisterKey,
+          child: Center(
+            child: ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(15.0),
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: height / 2 - 100,
+                    child: SvgPicture.asset(
+                      'assets/images/ideas.svg',
+                      fit: BoxFit.scaleDown,
+                    ),
                   ),
-                ),
-                const UserForm(),
-                const EmailForm(),
-                const PasswordForm(),
-                RoundedButton(text: 'SIGN IN', press: () => {validation()}),
-                AlreadyHaveAnAccountCheck(
-                    press: () => _navigateToLogin(context)),
-              ]),
+                  UserForm(
+                    onChanged: (String value) {
+                      setState(() {
+                        username = value;
+                      });
+                    },
+                  ),
+                  EmailForm(
+                    onChanged: (String value) {
+                      setState(() {
+                        email = value;
+                      });
+                    },
+                  ),
+                  PasswordForm(
+                    onChanged: (String value) {
+                      setState(() {
+                        password = value;
+                      });
+                    },
+                  ),
+                  RoundedButton(text: 'SIGN IN', press: validation),
+                  AlreadyHaveAnAccountCheck(
+                      press: () => _navigateToLogin(context)),
+                ]),
+          ),
         ),
-      ),
-    );
+      );
   }
 
   _navigateToLogin(context) {
